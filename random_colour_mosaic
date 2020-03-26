@@ -1,0 +1,25 @@
+int columbs = 10;
+int rows = 20;
+
+int redmax = 255;
+int redmin = 100;
+int greenmax = 255;
+int greenmin = 0;
+int bluemax = 255;
+int bluemin = 0;
+
+void setup(){
+  size(1280,800);
+}
+
+void draw(){ 
+  if (keyPressed == true) {
+    for (int x = 0; x <= width; x += width/columbs) {
+      for (int y = 0; y <= height; y += height/rows) {
+        noStroke();
+        fill(random(redmin,redmax),random(greenmin,greenmax),random(bluemin,bluemax));
+        rect(x,y,width/columbs,height/rows);
+      }
+    }
+  }
+}
