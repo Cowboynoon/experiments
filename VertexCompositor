@@ -1,0 +1,218 @@
+AngularShape shape1;
+AngularShape shape2;
+AngularShape shape3; 
+AngularShape shape4;
+AngularShape shape5;
+
+String l = "INSTRUCTIONS";
+String m = "1) Press any key to activate the Vertex Compositor";
+String n = "2) Tap any key again to create a new composition";
+int framewidth =24;
+int select;
+
+color[] mypapers = {
+color(179,209,185),      //warm green grey
+color(170,158,151),      //warm pinkish grey med.
+color(153,180,180),      //cool blue grey
+color(0),                //black
+color(103,100,78),       //dark warm grey 
+color(255,218,149),      //light orange yellow
+color(255),              //white
+color(184,185,172),      //mousey khaki grey
+};
+
+String [] papercolourNames = {
+"warm green grey",
+"warm pinkish grey med.",
+"cool blue grey",
+"black",
+"dark warm grey", 
+"light orange yellow",
+"white",
+"mousey khaki grey"
+};
+
+void setup(){
+  shape1 = new AngularShape(5,50);
+  shape2 = new AngularShape(5,200);
+  shape3 = new AngularShape(8,100);
+  shape4 = new AngularShape(4,50);
+  shape5 = new AngularShape(6,100);
+  size (1040,800); //paper format
+  background(0);
+  noStroke();
+  fill(150);
+  textSize (20);
+  textAlign (CENTER);
+  text (m, width/2, height/2);
+  text (n, width/2, height/2+30);
+  text (l, width/2, height/2-30);
+}
+
+void draw(){ 
+  
+  
+  if (keyPressed){
+    select =  int(random(0, mypapers.length));
+    background(mypapers[select]);
+  shape1.display();
+  shape2.display();
+  shape3.display();
+  shape4.display();
+  shape5.display();
+  
+  
+  //draw an optional guide grid to assist transferring the composition to paper manually
+  //thin black lines for visibility over light areas
+  stroke (0,60);
+  strokeWeight (1);
+  for (int i=1; i<4; i++){
+  line(width/4*i, 0, width/4*i, height);
+  line(0, height/4*i, width, height/4*i);
+  }
+  
+  //thin white lines for visibility over dark areas
+  stroke (255,60);
+  strokeWeight (1);
+  for (int i=1; i<4; i++){
+  line(width/4*i+1, 0+1, width/4*i+1, height+1);
+  line(0+1, height/4*i+1, width+1, height/4*i+1);
+  }
+  
+  //white border to mimic the pastel paper format
+  fill(255);
+  rect (0,0,width,framewidth);
+  rect (0,0,framewidth,height);
+  rect (width-framewidth,0,framewidth,height);
+  rect (0,height-framewidth,width,framewidth);
+  
+  //Display the colours used in each compostition
+  fill(60);
+  textSize (10);
+  textAlign (CENTER);
+  text("Colours used:     1. "+ (shape1.mycolourNames[shape1.select])+
+     "      2. "+ (shape2.mycolourNames[shape2.select])+
+     "      3. "+ (shape3.mycolourNames[shape3.select])+
+     "      4. "+ (shape4.mycolourNames[shape4.select])+
+     "      5. "+ (shape5.mycolourNames[shape5.select])+
+     "      6. On " + papercolourNames[select] + " paper.", width/2, 15);
+  
+  } 
+}
+
+class AngularShape {
+
+//int [] opacity = {200, 100}; 
+int [] opacity = {150};
+int spacing;
+int sides;
+int select;
+
+
+color[] mycolours = {
+//reds & violets
+color(153,130,122),    //mars violet med chrom grey
+color(118,47,53),      //deep madder lake med
+color(216,68,147),     //red violet med
+color(93,28,45),       //indian red dark
+color(229,132,123),    //coral med
+color(255,136,93),     //bright orange red (perm.red.light)
+color(206,152,181),    //bordeaux pink
+
+//greens&blues
+color(25,64,55),        //bluish green dark
+color(49,62,52),        //green grey dark
+color(46,53,62),        //bluish grey dark
+color(63,80,40),        //cinnebar green dark
+color(43,98,67),        //permanent green dark
+color(123,134,107),     //green grey med
+color(135,247,173),     //peppermint green
+
+//ocres
+//color(78,41,20),        //burnt sienna dark (rd brown)
+color(121,113,64),      //raw umber (khaki) dark
+color(180,167,100),     //raw umber (khaki) light (replace)
+color(131,123,64),      //yellow ochre (khaki) med (full) 
+color(201,181,140),     //burnt umber light (pinkish khaki)(full))
+color(232,165,101),     //gold ochre med orange (enough)
+color(252,224,196),     //gold ochre light (enough)
+color(227,187,101),     //yellow ochre saturated (enough) 
+color(255,217,131),     //yellow ochre med (finished)
+color(255,240,191),     //yellow ochre very light (enough)
+
+//blues & turquise
+color(60,131,131),      //turquise blue dark
+color(201,241,252),     //ultramarine v light
+color(152,232,215),     //light turquoise
+color(147,212,234),     //phtalo blue light
+color(40,103,124),      //phtalo blue dark  
+color(65,176,160),       //turquoise med
+color(139,146,255),      //ultramarine med
+color(9,53,90),          //prussian dk
+color(223,224,213),      //mouse grey lt
+};
+
+
+String [] mycolourNames = {
+//reds & violets
+"Mars violet med chrom grey",
+"Deep madder lake med",
+"Red violet med",
+"Indian red dark",
+"Coral med",
+"Bright orange red (perm.red.lt)",
+"Bordeaux pink",
+
+//greens & blues
+"Bluish green dark",
+"Green grey dark",
+"Bluish grey dark",
+"Cinnebar green dark",
+"Permanent green dark",
+"Green grey med",
+"Peppermint green",
+
+//ocres
+"Burnt sienna dk (rd brown)",
+"Raw umber(khaki) dk",
+"Raw umber(khaki) lt",
+"Yellow ochre (khaki) med", 
+"Burnt umber lt (pinksh khaki)",
+"Gold ochre med orange",
+"Gold ochre lt",
+"Yellow ochre v.saturated", 
+"Yellow ochre med",
+"Yellow ochre v.lt",
+
+//blues
+"Turquise blue dark",
+"Ultramarine v. lt",
+"Turquoise v. lt",
+"Phtalo blue lt",
+"Phtalo blue dk",  
+"Turquoise med",
+"Ultramarine med",
+"Prussian dk",
+"Mouse grey v. lt",
+};
+
+//constructor
+AngularShape (int var1, int var2) {
+  sides = var1;
+  spacing = var2;
+  }
+
+//methods:
+void display(){ 
+  int myopacity = opacity[(int)random(opacity.length)];
+  select =  int(random(0, mycolours.length));
+  noStroke();
+  fill(mycolours[select],myopacity);
+  beginShape();
+  for (int s=1; s< sides; s++){
+    vertex ((random (0-spacing,width+spacing)),(random (0-spacing,height+spacing)));
+    }
+  endShape(CLOSE);
+}
+
+}
