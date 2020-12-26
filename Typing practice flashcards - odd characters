@@ -1,0 +1,57 @@
+char [] letters = new char[26];
+int select, counter, total;
+boolean answer;
+
+void setup () {
+  fullScreen();
+  letters[0]= '(';
+  letters[1]= '{';
+  letters[2]= '}';
+  letters[3]= '<';
+  letters[4]= '>';
+  letters[5]= ')';
+  letters[6]= '"';
+  letters[7]= '*';
+  letters[8]= '[';
+  letters[9]= ']';
+  letters[10]= ';';
+  letters[11]= ',';
+  letters[12]= '1';
+  letters[13]= '2';
+  letters[14]= '3';
+  letters[15]= '4';
+  letters[16]= '5';
+  letters[17]= '6';
+  letters[18]= '7';
+  letters[19]= '8';
+  letters[20]= '9';
+  letters[21]= '0';
+  letters[22]= '+';
+  letters[23]= '-';
+  letters[24]= '/';
+  letters[25]= '&';
+  
+  select = int(random(0,26)); 
+  counter = 0;
+}
+
+
+
+void draw () {
+  background(255);
+  frameRate(10);
+  textSize (200);
+  textAlign (CENTER);
+  fill(0);
+  text (letters[select], width/2,height/2+50);
+  textSize (20);
+  textAlign (CENTER);
+  text (counter, width/2, height-50); 
+  
+  if (keyPressed) {
+    if (key==letters[select]) {
+    select = int(random(0,26));
+    counter = counter+1;
+    }
+  }
+}
