@@ -1,58 +1,89 @@
-char [] letters = new char[26];
-int select, counter, total;
-boolean answer;
+char [] letters = new char[16];
+char [] Uppercaseletters = new char[11];
+float counter, correct, incorrect, percentage;
+int select, select2, alternate;
 
 void setup () {
   fullScreen();
-  letters[0]= '(';
-  letters[1]= '{';
-  letters[2]= '}';
-  letters[3]= '<';
-  letters[4]= '>';
-  letters[5]= ')';
-  letters[6]= '"';
-  letters[7]= '*';
-  letters[8]= '[';
-  letters[9]= ']';
-  letters[10]= ';';
-  letters[11]= ',';
-  letters[12]= '1';
-  letters[13]= '2';
-  letters[14]= '3';
-  letters[15]= '4';
-  letters[16]= '5';
-  letters[17]= '6';
-  letters[18]= '7';
-  letters[19]= '8';
-  letters[20]= '9';
-  letters[21]= '0';
-  letters[22]= '+';
-  letters[23]= '-';
-  letters[24]= '/';
-  letters[25]= '&';
-  
-  select = int(random(0,26)); 
-  counter = 0;
+  Uppercaseletters[0]= '(';
+  Uppercaseletters[1]= '{';
+  Uppercaseletters[2]= '}';
+  Uppercaseletters[3]= '<';
+  Uppercaseletters[4]= '>';
+  Uppercaseletters[5]= ')';
+  Uppercaseletters[6]= '"';
+  Uppercaseletters[7]= '*';
+  Uppercaseletters[8]= '+';
+  Uppercaseletters[9]= '&';  
+  Uppercaseletters[10]= '|';
+  letters[0]= '[';
+  letters[1]= ']';
+  letters[2]= ';';
+  letters[3]= ',';
+  letters[4]= '1';
+  letters[5]= '2';
+  letters[6]= '3';
+  letters[7]= '4';
+  letters[8]= '5';
+  letters[9]= '6';
+  letters[10]= '7';
+  letters[11]= '8';
+  letters[12]= '9';
+  letters[13]= '0';
+  letters[14]= '-';
+  letters[15]= '/';
+  select = int(random(0,16));
+  select2 = int(random(0,11));
+  alternate = int(random(1,3)); //coin toss to show either an uppercase or lowercase key
+  counter = 0.0; //turned this into a float in order to calculate a %
 }
-
-
 
 void draw () {
   background(255);
-  frameRate(10);
-  textSize (200);
+  textSize (height/3);
   textAlign (CENTER);
   fill(0);
+  if (alternate == 1){  //lowercase                                           
   text (letters[select], width/2,height/2+50);
   textSize (20);
   textAlign (CENTER);
-  text (counter, width/2, height-50); 
-  
-  if (keyPressed) {
-    if (key==letters[select]) {
-    select = int(random(0,26));
-    counter = counter+1;
-    }
-  }
+  text (int(counter)+" total", width/5, height -50); 
+  text (int(correct) + " correct", width/5*2, height - 50);
+  text (int(incorrect)+" incorrect", width/5*3, height - 50);
+  text (int(percentage) + " %", width/5*4, height -50);
+  }else{ //uppercase
+    text(Uppercaseletters[select2], width/2, height/2+50);
+  textSize (20);
+  textAlign (CENTER);
+  text (int(counter)+" total", width/5, height -50); 
+  text (int(correct) + " correct", width/5*2, height - 50);
+  text (int(incorrect)+" incorrect", width/5*3, height - 50);
+  text (int(percentage) + " %", width/5*4, height -50);
+}
 }
 
+
+void keyPressed() {
+  if ((key==letters[select]) || (key==Uppercaseletters[select2])){  //update counters and choose new keys if the key was pressed correctly
+    alternate = int(random(1,3));//select a new upper or lowercase family
+    select = int(random(0,16)); //choose a new letter
+    select2 = int(random(0,11));//choose a new uppercase letter
+    alternate = int(random(1,3));//coin throw to choose upper or lower
+    counter += 1.0;             //update counter
+    correct += 1.0;             //update score
+    percentage = correct/counter*100;  //update %
+  }else if (key==CODED){ //ignore if a shift key was pressed (necessary otherwise a shift key will update the score as a mistake
+    counter += 0;
+    incorrect += 0;
+  }else{   //update mistake score & counters and choose new keys
+    alternate = int(random(1,3));//select a new upper or lowercase family
+    select = int(random(0,16)); //choose a new letter
+    select2 = int(random(0,11));//choose a new uppercase letter
+    alternate = int(random(1,3));//coin throw to choose upper or lower
+    counter += 1.0;             //update counter
+    correct += 0;             //update score
+    incorrect +=1;
+    percentage = correct/counter*100;  //update %
+    
+  }
+}
